@@ -624,7 +624,7 @@ local function broadcastCheckpoint(y, fuelLevel)
   if not rednet.isOpen() then
     rednet.open("right")
   end
-  broadcastMessage = string.format("Currently mining at Y: %d, Fuel Level: %d\n\n", y, turtle.getFuelLevel())
+  broadcastMessage = string.format("Mining at Y: %d, Fuel Level: %d\n\n", y, turtle.getFuelLevel())
   print("Broadcasting: " .. broadcastMessage)
   rednet.broadcast(broadcast)
 end
