@@ -626,7 +626,7 @@ local function broadcastCheckpoint(y, fuelLevel)
   end
   broadcastMessage = string.format("Mining at Y: %d, Fuel Level: %d\n\n", y, turtle.getFuelLevel())
   print("Broadcasting: " .. broadcastMessage)
-  rednet.broadcast(broadcast)
+  rednet.broadcast(broadcastMessage)
 end
 
 local function returnToWork()
