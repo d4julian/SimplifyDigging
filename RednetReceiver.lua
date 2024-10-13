@@ -38,7 +38,10 @@ while true do
     turtles[senderId] = message
     
     
-    print("Turtle id: " .. senderId .. " | Message: " .. message .. " | Protocol: " .. protocol)
+    print("Turtle id: " .. (senderId or "Unknown") .. 
+      " | Message: " .. (message or "No message") .. 
+      " | Protocol: " .. (protocol or "None"))
+
     updateScreen()
 end
 
