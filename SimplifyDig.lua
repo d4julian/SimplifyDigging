@@ -630,8 +630,6 @@ local function returnHome()
 end
 
 local function returnToWork()
-  local positiveLastY = -last.y
-  broadcastCheckpoint(string.format("Layers mined: %d, Fuel: %d\n\n", positiveLastY, turtle.getFuelLevel()))
   state = "return_mine"
   moveToTarget(last.x, last.y, last.z, "z")
   face(last.facing)
@@ -660,6 +658,7 @@ local function room()
       returnToWork()
     end
     state = "mining"
+    broadcastCheckpoint(string.format("Layers mined: %d, Fuel: %d\n\n", -last.y, turtle.getFuelLevel()))
   end
 
   local wrapper = {
@@ -843,7 +842,6 @@ local function quarry()
   else
     error(err, 0)
   end
-  broadcastCheckpoint(string.format("Finished mining, Fuel: %d\n\n", turtle.getFuelLevel()))
 end
 
 -- Parse arguments.
@@ -907,6 +905,7 @@ local function main()
   elseif args.args[1] == "quarry" then
     quarry()
   end
+  broadcastCheckpoint(string.format("Finished mining, Fuel: %d\n\n", turtle.getFuelLevel()))
 end
 
 local ok, err = pcall(main)
