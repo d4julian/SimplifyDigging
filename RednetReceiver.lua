@@ -26,13 +26,16 @@ local function updateScreen()
         monitor.write(id .. " | " .. checkpoint)
     end
 end
+updateScreen()
 
 while true do
     -- Wait for a message
+    
     local senderId, message, protocol = rednet.receive()
     turtles[senderId] = message
-    updateScreen()
+    
     
     print("Turtle id: " .. senderId .. " | Message: " .. message .. " | Protocol: " .. protocol .. "\n")
+    updateScreen()
 end
 

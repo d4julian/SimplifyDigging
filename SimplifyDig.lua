@@ -621,7 +621,12 @@ local function returnHome()
 end
 
 local function broadcastCheckpoint(y, fuelLevel)
-  rednet.broadcast(string.format("Dropped off my items. Currently mining at Y: %d, Fuel Level: %d\n\n", y, turtle.getFuelLevel()))
+  if not rednet.isOpen() then
+    rednet.open("right")
+  end
+  broadcastMessage = string.format("Dropped off my items. Currently mining at Y: %d, Fuel Level: %d\n\n", y, turtle.getFuelLevel())
+  print("Broadcasting: " .. broadcastMessage)
+  rednet.broadcast(broadcast)
 end
 
 local function returnToWork()
