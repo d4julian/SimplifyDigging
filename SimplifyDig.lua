@@ -618,7 +618,7 @@ local function returnHome()
   state = "return_home"
   moveToTarget(start.x, start.y, start.z)
   face((start.facing + 2) % 4)
-  broadcastCheckpoint(string.format("Finished mining, Fuel: %d\n\n", math.abs(last.y), turtle.getFuelLevel()))
+  broadcastCheckpoint(string.format("Finished mining, Fuel: %d\n\n", turtle.getFuelLevel()))
 end
 
 local function broadcastCheckpoint(message)
@@ -632,7 +632,8 @@ local function broadcastCheckpoint(message)
 end
 
 local function returnToWork()
-  broadcastCheckpoint(string.format("Layers mined: %d, Fuel: %d\n\n", math.abs(last.y), turtle.getFuelLevel()))
+  local positiveLastY = -last.y
+  broadcastCheckpoint(string.format("Layers mined: %d, Fuel: %d\n\n", positiveLastY, turtle.getFuelLevel()))
   state = "return_mine"
   moveToTarget(last.x, last.y, last.z, "z")
   face(last.facing)
