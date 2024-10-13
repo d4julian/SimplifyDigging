@@ -621,12 +621,17 @@ local function returnHome()
 end
 
 local function returnToWork()
+  broadcastCheckpoint(last.y, turtle.getFuelLevel())
   state = "return_mine"
   moveToTarget(last.x, last.y, last.z, "z")
   face(last.facing)
 end
 
---- Dig a room.
+local function broadcastCheckpoint(y, fuelLevel)
+  rednet.broadcast(string.format("Dropped off my items. Currently mining at Y: %d, Fuel Level: %d\n\n", y, turtle.getFuelLevel()))
+end
+
+--- Dig a room.s
 -- @tparam {args = {string,...}, flags = {[string] = boolean|string}} The table of arguments.
 local function room()
   -- check arguments for correctness
