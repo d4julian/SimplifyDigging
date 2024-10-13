@@ -618,19 +618,21 @@ local function returnHome()
   state = "return_home"
   moveToTarget(start.x, start.y, start.z)
   face((start.facing + 2) % 4)
+  broadcastCheckpoint(string.format("Finished mining, Fuel: %d\n\n", math.abs(last.y), turtle.getFuelLevel()))
 end
 
-local function broadcastCheckpoint(y, fuelLevel)
+local function broadcastCheckpoint(message)
   if not rednet.isOpen() then
     rednet.open("right")
+    print("Opening Rednet connection: My ID is " .. os.getComputerID())
   end
-  broadcastMessage = string.format("Mining at Y: %d, Fuel Level: %d\n\n", y, turtle.getFuelLevel())
-  print("Broadcasting: " .. broadcastMessage)
+  broadcastMessage = message
+  --- print("Broadcasting: " .. broadcastMessage)
   rednet.broadcast(broadcastMessage)
 end
 
 local function returnToWork()
-  broadcastCheckpoint(pos.y, turtle.getFuelLevel())
+  broadcastCheckpoint(string.format("Layers mined: %d, Fuel: %d\n\n", math.abs(last.y), turtle.getFuelLevel()))
   state = "return_mine"
   moveToTarget(last.x, last.y, last.z, "z")
   face(last.facing)

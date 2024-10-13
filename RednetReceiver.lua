@@ -18,12 +18,15 @@ local function updateScreen()
     monitor.setCursorPos(1, 1)
     monitor.write("Turtles:")
     monitor.setCursorPos(1, 2)
-    monitor.write("ID | Checkpoint")
+    monitor.write("ID | Status")
     monitor.setCursorPos(1, 3)
     monitor.write("---------------")
-    for id, checkpoint in pairs(turtles) do
-        monitor.setCursorPos(1, 3 + id)
-        monitor.write(id .. " | " .. checkpoint)
+    monitor.setCursorPos(1, 4) -- Add a line of space
+    local line = 5 -- Start from the next line after the space
+    for id, message in pairs(turtles) do
+        monitor.setCursorPos(1, line)
+        monitor.write(id .. " | " .. message)
+        line = line + 1 -- Move to the next line for the next turtle
     end
 end
 updateScreen()
@@ -35,7 +38,7 @@ while true do
     turtles[senderId] = message
     
     
-    print("Turtle id: " .. senderId .. " | Message: " .. message .. " | Protocol: " .. protocol .. "\n")
+    print("Turtle id: " .. senderId .. " | Message: " .. message .. " | Protocol: " .. protocol)
     updateScreen()
 end
 
