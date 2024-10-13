@@ -31,17 +31,30 @@ local function updateScreen()
 end
 updateScreen()
 
-while true do
-    -- Wait for a message
-    
-    local senderId, message, protocol = rednet.receive()
-    turtles[senderId] = message
-    
-    
-    print("Turtle id: " .. (senderId or "Unknown") .. 
-      " | Message: " .. (message or "No message") .. 
-      " | Protocol: " .. (protocol or "None"))
 
-    updateScreen()
+local function rednetListener()
+    while true do
+        -- Wait for a message
+        
+        local senderId, message, protocol = rednet.receive()
+        turtles[senderId] = message
+        
+        
+        print("Turtle id: " .. (senderId or "Unknown") .. 
+          " | Message: " .. (message or "No message") .. 
+          " | Protocol: " .. (protocol or "None"))
+    
+        updateScreen()
+    end
 end
 
+local function monitorClickListener()
+    while true do
+        local event, side = os.pullEvent("monitor_touch")
+        if side == monitorSide then
+            updateScreen()
+        end
+    end
+end
+
+parallel.waitForAll(rednetListener, monitorClickListener)

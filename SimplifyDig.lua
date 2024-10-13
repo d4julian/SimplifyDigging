@@ -627,7 +627,6 @@ local function returnHome()
   state = "return_home"
   moveToTarget(start.x, start.y, start.z)
   face((start.facing + 2) % 4)
-  broadcastCheckpoint(string.format("Finished mining, Fuel: %d\n\n", turtle.getFuelLevel()))
 end
 
 local function returnToWork()
@@ -844,6 +843,7 @@ local function quarry()
   else
     error(err, 0)
   end
+  broadcastCheckpoint(string.format("Finished mining, Fuel: %d\n\n", turtle.getFuelLevel()))
 end
 
 -- Parse arguments.
