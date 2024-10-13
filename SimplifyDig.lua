@@ -613,22 +613,21 @@ local function moveToTarget(x, y, z, startZ)
   end
 end
 
+local function broadcastCheckpoint(message)
+  if not rednet.isOpen() then
+    rednet.open("right")
+    print("Opening Rednet connection: My ID is " .. os.getComputerID())
+  end
+  --- print("Broadcasting: " .. message)
+  rednet.broadcast(message)
+end
+
 -- Move to home target, facing backwards.
 local function returnHome()
   state = "return_home"
   moveToTarget(start.x, start.y, start.z)
   face((start.facing + 2) % 4)
   broadcastCheckpoint(string.format("Finished mining, Fuel: %d\n\n", turtle.getFuelLevel()))
-end
-
-local function broadcastCheckpoint(message)
-  if not rednet.isOpen() then
-    rednet.open("right")
-    print("Opening Rednet connection: My ID is " .. os.getComputerID())
-  end
-  broadcastMessage = message
-  --- print("Broadcasting: " .. broadcastMessage)
-  rednet.broadcast(broadcastMessage)
 end
 
 local function returnToWork()
